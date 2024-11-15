@@ -229,20 +229,33 @@ def word_similarity(words, target_word):
     return sorted_similarity
 
 
-def load_lang(path: str):
+def load_lang(path: str, backwards: bool = False) -> dict:
     with open(path, 'r', encoding='UTF-8') as f:
         lines = f.read().split('\n')
-    return lines
+    dictionary = {}
+    for i in lines:
+        if backwards:
+            dictionary[i[i.index('=') + 1:]] = i[:i.index('=')]
+        else:
+            dictionary[i[:i.index('=')]] = i[i.index('=') + 1:]
+    return dictionary
+
+
+def update_lang(path: str, new_dict: dict, backwards: bool = False):
+    new_me = []
+    for i in new_dict:
+        if backwards:
+            new_me.append(f'{new_dict.get(i)}={i}')
+        else:
+            new_me.append(f'{i}={new_dict.get(i)}')
+    with open(path, 'w', encoding='UTF-8') as f:
+        f.write('\n'.join(new_me))
 
 
 def translate_to_low(text: str):
     result = []
-    lines = load_lang()
-    lines = lines[:lines.index('# END')]
-    lines = [i[2:] for i in lines]
-    dictionary = {}
-    for i in lines:
-        dictionary[i[:i.index('=')]] = i[i.index('=') + 1:]
+    dictionary = load_lang('low.lingua')
+
     for i in text.split():
         word = ''
         is_capital = False
@@ -265,7 +278,7 @@ def translate_to_low(text: str):
             if similar[1] > 0.8:
                 print(f'Suggestion: {similar[0]} = {dictionary.get(similar[0], "NOT FOUND WTF EROR")}')
             new_word = input(f'? {i} = ')
-            say(new_word, lang='ru')
+            say(new_word, lang='it')
             if new_word:
                 dictionary[i.lower()] = new_word.lower()
                 word = dictionary[i.lower()]
@@ -281,26 +294,17 @@ def translate_to_low(text: str):
         # print()
         result.append(word)
     # print(result)
-    new_me = []
-    for i in dictionary:
-        new_me.append(f'# {i}={dictionary.get(i)}')
-    random.shuffle(new_me)
-    new_me.extend(load_lang()[load_lang().index('# END'):])
-    with open('translator.py', 'w', encoding='UTF-8') as f:
-        f.write('\n'.join(new_me))
+
+
+    update_lang('low.lingua', dictionary)
     print(' '.join(result))
-    say(' '.join(result), lang='ru', wait=True)
+    say(' '.join(result), lang='it', wait=True)
     return ' '.join(result)
 
 
 def translate_from_low(text: str) -> str:
     result = []
-    lines = load_lang()
-    lines = lines[:lines.index('# END')]
-    lines = [i[2:] for i in lines]
-    dictionary = {}
-    for i in lines:
-        dictionary[i[i.index('=') + 1:]] = i[:i.index('=')]
+    dictionary = load_lang('low.lingua', backwards=True)
     for i in text.split():
         word = ''
         is_capital = False
