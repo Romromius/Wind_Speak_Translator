@@ -1,210 +1,11 @@
-# breaks=икуфлы
-# here=руку
-# lunch=дгитис
-# playing=здифинштип
-# need=туув
-# sun=ыгит
-# tightly=ешпредин
-# overhead=щмукруфив
-# attacks=фефслы
-# head=руфив
-# talk=ефдил
-# other=шерук
-# are=фку
-# with=цшер
-# warm=цфык
-# yoga=щпиф
-# friends=акшутвы
-# lines=дшитуы
-# voice=мщишсу
-# heavy=руфмин
-# goal=пщифд
-# experienced=учзукшутсув
-# zones=яшты
-# wake=цфлу
-# many=ыфтин
-# tramontane;=трамонтана
-# across=фсыкщи
-# engines=уптутшы
-# sinner=ыштук
-# orders=щквукы
-# tanks=ефтлы
-# answer=фтыцук
-# don't=выщтэ
-# camp=сфиз
-# they=ерун
-# requesting=куйгуштеп
-# adults=вгеды
-# action=фсещт
-# hello=рудыщ
-# ships=ыршзы
-# but=иге
-# drawn=вкифтиц
-# children=сришдвукут
-# planes=здифтуы
-# advanced=фывмыфсув
-# class=судфы
-# clear=сдуфик
-# nssa=нсса
-# tasks=ефтилы
-# withdrawing=цшервукциштип
-# go=пшы
-# afternoon=фектищит
-# them=ерум
-# some=ыщью
-# marched=фкусрув
-# the=еру
-# attending=футевштип
-# soft=ыщае
-# steady=ыефун
-# sure=ыгку
-# prefer=зкаук
-# everyone=умукнищту
-# at=фе
-# meetings=уештпы
-# others=шерукы
-# we=цу
-# idle=швиду
-# flew=адуц
-# my=ыу
-# will=цшид
-# their=ерук
-# if=ша
-# 3=ерку
-# up=гыз
-# scanning=ысфтиштип
-# loud=дыщгив
-# support=ыгзыщке
-# lunchtime=дгитисрешью
-# guiding=пгивштип
-# north=тщекр
-# gave=фму
-# forces=ащксы
-# maneuver=фтугмук
-# while=цыршду
-# as=фы
-# a=фа
-# in=шти
-# by=ин
-# after=феук
-# sandwich=ыфтвицшыр
-# genghis=чошпош
-# learning=кыщфкиштип
-# words=цыщквы
-# intentions=штеутещты
-# drink=вкишытл
-# long=дыщтип
-# people=зушду
-# school=ысришыд
-# is=шы
-# hand=ртив
-# khan=штырь
-# ur;=ур
-# cross=сыкщи
-# dropped=вкищзув
-# our=щгик
-# any=фтин
-# might=шпре
-# chingizhan=чошпоштырь
-# from=акщ
-# enemy=утун
-# sign=ышт
-# completing=сщыздештип
-# did=вшыв
-# ambitions=фишешты
-# emperors=узущики
-# and=фтив
-# nssa;=нсса
-# every=умукун
-# come=сшью
-# assurances=фыгфтусы
-# roaring=кщифкшит
-# new=туц
-# bridge=икшпу
-# you=ныщг
-# soldiers=ыщвукдшы
-# we've=цуэму
-# live=дышму
-# ur=ур
-# salad=ыфдыфыв
-# to=еш
-# there=еруку
-# toward=ещцыфкив
-# tuesday=егуфын
-# during=вигштип
-# join=ошит
-# teachers=уфсрукы
-# moving=ышмыштып
-# teacher=уфсрук
-# coffee=сшау
-# border=ищквук
-# understatement=гитвукефете
-# shadow=ырфивщыц
-# when=црут
-# commander=сфитвук
-# charge=срифпу
-# morning=щкитштип
-# so=ыщ
-# front=акщте
-# field=ашдув
-# things=ершпы
-# city=сшен
-# his=ршы
-# alive=фдышму
-# troops=ешзы
-# boots=ищещы
-# supplies=ыгздушы
-# rifles=кшаду
-# day=выфин
-# work=цыщикл
-# ordinal=щкифтшфид
-# not=тще
-# on=щит
-# was=цфы
-# hail=рфишыд
-# something=ышурштип
-# do=выщ
-# doesn't=вщутыэ
-# start=ефке
-# rises=кшыу
-# savien=ыфшмут
-# that=ерфе
-# coordinated=сщиквиштифец
-# of=ща
-# each=уфр
-# behind=урштив
-# attack=фефсыл
-# be=иу
-# firm=ашк
-# ground=пкищгвит
-# ship=ырш
-# distance=вшефтысу
-# afraid=факфшыв
-# through=еркигпыр
-# oshtro=оштро
-# for=ашк
-# your=ныщгик
-# eyes=унуы
-# held=рудив
-# world=цыщдив
-# what=церфе
-# tramontane=трамонтана
-# empire=узышку
-# rumbled=кигидув
-# tea=ефу
-# horizon=рщикщяшт
-# glory=пдыщкин
-# emperor=узущик
-# which=цришыр
-# enjoys=утощны
-# or=щик
-# END
 import difflib
-import random
+import sys
 from gtts import gTTS
 import pygame
 
 pygame.init()
+
+debug = 'debug' in sys.argv
 
 def say(text, lang='en', wait=False):
     gTTS(text=text, lang=lang).save('speech.ogg')
@@ -274,16 +75,19 @@ def translate_to_low(text: str):
         if dictionary.get(i.lower(), False):
             word = dictionary.get(i.lower())
         else:
-            similar = word_similarity(dictionary.keys(), i.lower())
-            if similar[1] > 0.8:
-                print(f'Suggestion: {similar[0]} = {dictionary.get(similar[0], "NOT FOUND WTF EROR")}')
-            new_word = input(f'? {i} = ')
-            say(new_word, lang='it')
-            if new_word:
-                dictionary[i.lower()] = new_word.lower()
-                word = dictionary[i.lower()]
+            if debug:
+                word = i.lower()
             else:
-                word = i
+                similar = word_similarity(dictionary.keys(), i.lower())
+                if similar[1] > 0.8:
+                    print(f'Suggestion: {similar[0]} = {dictionary.get(similar[0], "NOT FOUND WTF EROR")}')
+                new_word = input(f'? {i} = ')
+                say(new_word, lang='it')
+                if new_word:
+                    dictionary[i.lower()] = new_word.lower()
+                    word = dictionary[i.lower()]
+                else:
+                    word = i
 
         if is_capital:
             word = word.capitalize()
