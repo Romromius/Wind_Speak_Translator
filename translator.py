@@ -8,6 +8,8 @@ pygame.init()
 debug = 'debug' in sys.argv
 
 def say(text, lang='en', wait=False):
+    if not text:
+        return
     gTTS(text=text, lang=lang).save('speech.ogg')
     pygame.mixer.Sound('speech.ogg').play()
     if wait:
@@ -76,8 +78,6 @@ def translate_to_low(text: str):
             word = dictionary.get(i.lower())
         else:
             if debug:
-                word = i.lower()
-            else:
                 similar = word_similarity(dictionary.keys(), i.lower())
                 if similar[1] > 0.8:
                     print(f'Suggestion: {similar[0]} = {dictionary.get(similar[0], "NOT FOUND WTF EROR")}')
@@ -88,6 +88,8 @@ def translate_to_low(text: str):
                     word = dictionary[i.lower()]
                 else:
                     word = i
+            else:
+                word = i.lower()
 
         if is_capital:
             word = word.capitalize()
