@@ -1,0 +1,16 @@
+[
+  [
+    {
+      "center":  [250, 150],
+      "length": 300,
+      "diameter": 100,
+      "angle": 45
+    },
+    {
+      "center":  [250, 350],
+      "length": 300,
+      "diameter": 100,
+      "angle": -45
+    }
+  ]
+]
